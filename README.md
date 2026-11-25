@@ -4,7 +4,7 @@
 
 ### One campus. Six sports. Every season in play.
 
-An interactive campus sports hub for discovering tournaments, following fixtures, and keeping player activity in view.
+A React-powered campus sports hub for discovering tournaments, following fixtures, and keeping player activity in view.
 
 </div>
 
@@ -21,28 +21,34 @@ SportSphere is a front-end demonstration of a college sports club management exp
 | **Tournaments** | Browse competitions, review event details, and manage registrations. |
 | **Player roster** | Search and filter sample player profiles. |
 | **Your profile** | Update profile details, choose sports interests, and switch themes. |
-| **Demo tools** | Restore sample data or inspect and export browser-stored app data. |
+| **Demo tools** | Restore the sample dataset or inspect and export browser-stored app data. |
 
 ## Get on the field
 
-There is no build step, package installation, or server configuration required.
+You'll need [Node.js](https://nodejs.org/) and npm.
 
-1. Clone the repository:
+1. Clone the repository and install dependencies:
 
    ```bash
    git clone https://github.com/aarishidey23/sports-league-management-system.git
    cd sports-league-management-system
+   npm install
    ```
 
-2. Open `index.html` in a modern browser.
-
-   Or start a local static server:
+2. Start the Vite development server:
 
    ```bash
-   py -m http.server 8000
+   npm run dev
    ```
 
-   Then visit [http://localhost:8000](http://localhost:8000).
+   Open the local URL printed in your terminal.
+
+To create and preview a production build:
+
+```bash
+npm run build
+npm run preview
+```
 
 ## Try the demo
 
@@ -56,22 +62,22 @@ The app also initializes sample users, sports, events, and activity in browser s
 
 ## Under the hood
 
-SportSphere is built with plain **HTML, CSS, and JavaScript**. It has no framework or external package dependencies.
+SportSphere is built with **React**, **Vite**, and plain **CSS**. It has no backend or external data service.
 
 ```text
 .
-├── index.html          # App layout and views
+├── index.html          # Vite HTML entry
+├── src/
+│   ├── App.jsx          # React views, interactions, and local demo state
+│   ├── data.js          # Sample sports, tournaments, and player data
+│   └── main.jsx         # React application entry point
 ├── css/
-│   └── style.css       # Layout, components, and responsive styling
-├── js/
-│   ├── data.js         # Sample sports, tournaments, and player data
-│   ├── auth.js         # Demo sign-in, profile, and browser storage
-│   └── dashboard.js    # Navigation, rendering, search, and interactions
-├── courts/             # Sport illustrations
+│   └── style.css        # Layout, components, and responsive styling
+├── courts/              # Sport illustrations
 ├── oval.svg
 └── track.svg
 ```
 
 ## Important demo limitations
 
-This project is a client-side academic demo, **not production authentication or league software**. User accounts and app data are stored in the browser with `localStorage` and `sessionStorage`; there is no backend or database. The sample password is visible in the source code. Do not enter real passwords, personal information, or other sensitive data.
+This project is a client-side academic demo, **not production authentication or league software**. User accounts and app data are stored in the browser with `localStorage` and `sessionStorage`; there is no server-side authentication or database. The sample password is visible in the source code. Do not enter real passwords, personal information, or other sensitive data.
