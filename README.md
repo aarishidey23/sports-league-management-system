@@ -1,25 +1,77 @@
+<div align="center">
+
 # SportSphere
 
-SportSphere is a front-end sports club and league management demo. It provides a matchday dashboard for browsing sports, tournaments, registrations, and player information.
+### One campus. Six sports. Every season in play.
 
-## Features
+An interactive campus sports hub for discovering tournaments, following fixtures, and keeping player activity in view.
 
-- Dashboard with club stats, upcoming fixtures, and recent activity
-- Sports catalog for athletics, badminton, basketball, cricket, football, and volleyball
-- Tournament browsing, event registration, and registration management
-- Player roster with search and filtering
-- Profile, sports preferences, and theme controls
-- Demo sign-in and sample data stored in the browser
+</div>
 
-## Run locally
+SportSphere is a front-end demonstration of a college sports club management experience. Explore six sports, browse upcoming competitions, register for events, and personalize a player profile - all from a single matchday dashboard.
 
-No build step or package installation is required. Clone the repository and open `index.html` in a modern browser. Alternatively, serve the project folder with a local static web server.
+> **A demo, not a live league platform:** the app runs entirely in your browser and uses sample data.
 
-## Demo account
+## The matchday lineup
 
-- Email: `alex@sportsphere.edu`
-- Password: `demo1234`
+| Area | What you can do |
+| --- | --- |
+| **Dashboard** | Check club stats, upcoming fixtures, and recent activity. |
+| **Sports catalog** | Explore athletics, badminton, basketball, cricket, football, and volleyball. |
+| **Tournaments** | Browse competitions, review event details, and manage registrations. |
+| **Player roster** | Search and filter sample player profiles. |
+| **Your profile** | Update profile details, choose sports interests, and switch themes. |
+| **Demo tools** | Restore sample data or inspect and export browser-stored app data. |
 
-## Data and security
+## Get on the field
 
-This is an academic/demo application. Authentication and app data are simulated in the browser using `localStorage` and `sessionStorage`; there is no server-side authentication or database. Do not use real or sensitive information.
+There is no build step, package installation, or server configuration required.
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/aarishidey23/sports-league-management-system.git
+   cd sports-league-management-system
+   ```
+
+2. Open `index.html` in a modern browser.
+
+   Or start a local static server:
+
+   ```bash
+   py -m http.server 8000
+   ```
+
+   Then visit [http://localhost:8000](http://localhost:8000).
+
+## Try the demo
+
+If the sign-in screen is shown, use the built-in sample account:
+
+| Email | Password |
+| --- | --- |
+| `alex@sportsphere.edu` | `demo1234` |
+
+The app also initializes sample users, sports, events, and activity in browser storage so the dashboard has data to explore.
+
+## Under the hood
+
+SportSphere is built with plain **HTML, CSS, and JavaScript**. It has no framework or external package dependencies.
+
+```text
+.
+├── index.html          # App layout and views
+├── css/
+│   └── style.css       # Layout, components, and responsive styling
+├── js/
+│   ├── data.js         # Sample sports, tournaments, and player data
+│   ├── auth.js         # Demo sign-in, profile, and browser storage
+│   └── dashboard.js    # Navigation, rendering, search, and interactions
+├── courts/             # Sport illustrations
+├── oval.svg
+└── track.svg
+```
+
+## Important demo limitations
+
+This project is a client-side academic demo, **not production authentication or league software**. User accounts and app data are stored in the browser with `localStorage` and `sessionStorage`; there is no backend or database. The sample password is visible in the source code. Do not enter real passwords, personal information, or other sensitive data.
