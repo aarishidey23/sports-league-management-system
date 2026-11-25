@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SportSphere - Modern Sports Club Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Academic Project Disclaimer Banner -->
+
+
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-icon">ϟ</div>
+        <div class="logo-text">Sport<span>Sphere</span></div>
+      </div>
+
+      <nav aria-label="Main navigation"><div class="side-label">Club workspace</div><ul class="nav-list">
+        <li class="nav-item">
+          <a aria-current="page" class="nav-link active" onclick="switchView('dashboard')">
+            <span class="nav-icon"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round"><path d="M3 3h7v7H3z M14 3h7v7h-7z M3 14h7v7H3z M14 14h7v7h-7z"/></svg></span>
+            <span class="nav-label">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick="switchView('sports')">
+            <span class="nav-icon"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round"><path d="M7 3h10v5a5 5 0 0 1-10 0z M7 5H3v2a4 4 0 0 0 5 4 M17 5h4v2a4 4 0 0 1-5 4 M12 13v6 M7 21h10"/></svg></span>
+            <span class="nav-label">Sports Catalog</span>
+            <span class="nav-badge">6</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick="switchView('events')">
+            <span class="nav-icon"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round"><path d="M3 6h18v15H3z M3 10h18 M7 3v5 M17 3v5"/></svg></span>
+            <span class="nav-label">Tournaments</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick="switchView('myevents')">
+            <span class="nav-icon"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round"><path d="M4 4h16v17l-4-3-4 3-4-3-4 3z M8 9h8 M8 13h6"/></svg></span>
+            <span class="nav-label">My Registrations</span>
+            <span class="nav-badge" id="myEventsBadge">0</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick="switchView('players')">
+            <span class="nav-icon"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round"><path d="M15 8a4 4 0 1 1-8 0a4 4 0 1 1 8 0 M3 21v-2a8 8 0 0 1 16 0v2 M18 5q5 3 1 7"/></svg></span>
+            <span class="nav-label">Player Roster</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick="switchView('profile')">
+            <span class="nav-icon"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round"><path d="M16 7a4 4 0 1 1-8 0a4 4 0 1 1 8 0 M4 21v-2a8 8 0 0 1 16 0v2z"/></svg></span>
+            <span class="nav-label">My Profile</span>
+          </a>
+        </li>
+        <li class="nav-item" style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
+          <a class="nav-link" onclick="openProjectGuide()">
+            <span class="nav-icon"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round"><path d="M3 4q5-2 9 1 4-3 9-1v15q-5-1-9 2-4-3-9-2z M12 5v16"/></svg></span>
+            <span class="nav-label">Project guide</span>
+          </a>
+        </li>
+      </ul></nav>
+
+      <div class="sidebar-footer">
+        <div class="user-compact" id="currentUserWidget">
+          <div class="user-avatar" id="sidebarAvatar">A</div>
+          <div class="user-info-text">
+            <div class="user-name-text" id="sidebarName">Alex Rivers</div>
+            <div class="user-role-text" id="sidebarRole">Player</div>
+          </div>
+        </div>
+        <button class="btn btn-outline btn-sm" style="color: #ef4444; border-color: rgba(239, 68, 68, 0.3);" onclick="handleLogout()">
+          Log out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-wrapper">
+      
+      <!-- Top Navigation Bar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="btn-icon" id="toggleSidebarBtn" title="Toggle Sidebar">
+            ☰
+          </button>
+          <strong id="screenTitle">Dashboard</strong><div class="search-box">
+            <span class="search-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg></span>
+            <input type="text" id="globalSearchInput" placeholder="Search sports or events…" onkeyup="handleGlobalSearch(event)">
+          </div>
+        </div>
+
+        <div class="topbar-right"><span class="demo-label">Academic demo · Simulated sign-in</span>
+          <!-- Dark/Light Theme Toggle -->
+          <button class="btn-icon" id="themeToggleBtn" title="Switch Theme" onclick="toggleTheme()">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20.8 14A9 9 0 0 1 10 3.2 9 9 0 1 0 20.8 14Z"/></svg>
+          </button>
+
+          <!-- Notifications -->
+          <div class="notification-btn">
+            <button class="btn-icon" aria-label="Notifications" onclick="toggleNotifications()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 16c2-2 2-4 2-7a5 5 0 0 1 10 0c0 3 0 5 2 7v1H5z M10 20h4"/></svg>
+            </button>
+            <span class="notif-badge" id="notifBadge">3</span>
+          </div>
+
+          <!-- User Menu Trigger -->
+          <button class="account-link" aria-label="Open my profile" onclick="switchView('profile')">
+            <div class="user-avatar" id="topAvatar">A</div>
+            <span style="font-weight:600; font-size:0.88rem;" id="topUserName">Alex</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Dynamic Views Container -->
+      <main class="content-area">
+
+        <!-- ================= 1. DASHBOARD VIEW ================= -->
+        <section id="view-dashboard" class="view-section active">
+          <!-- Hero Banner -->
+          <header class="dashboard-heading"><h1>Matchday dashboard</h1><span id="todayDate"></span></header>
+          <article id="nextFixture" class="fixture-hero" aria-label="Next fixture"></article>
+          <div class="section-title"><h3>Club overview</h3></div>
+          <!-- Quick Metrics Grid -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon blue"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round"><path d="M7 3h10v5a5 5 0 0 1-10 0z M7 5H3v2a4 4 0 0 0 5 4 M17 5h4v2a4 4 0 0 1-5 4 M12 13v6 M7 21h10"/></svg></div>
+              <div class="stat-info">
+                <div class="stat-value" id="statTotalSports">6</div>
+                <div class="stat-label">Sports disciplines</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon green"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round"><path d="M3 6h18v15H3z M3 10h18 M7 3v5 M17 3v5"/></svg></div>
+              <div class="stat-info">
+                <div class="stat-value" id="statUpcomingEvents">–</div>
+                <div class="stat-label">Active tournaments</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon purple"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round"><path d="M15 8a4 4 0 1 1-8 0a4 4 0 1 1 8 0 M3 21v-2a8 8 0 0 1 16 0v2 M18 5q5 3 1 7"/></svg></div>
+              <div class="stat-info">
+                <div class="stat-value" id="statParticipants">–</div>
+                <div class="stat-label">Campus athletes</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon amber"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round"><path d="M4 4h16v17l-4-3-4 3-4-3-4 3z M8 9h8 M8 13h6"/></svg></div>
+              <div class="stat-info">
+                <div class="stat-value" id="statMyRegistrations">0</div>
+                <div class="stat-label">My registrations</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2 Columns: Tournaments + Recent Activity -->
+          <div class="dash-columns">
+            <!-- Left: Featured Upcoming Tournaments -->
+            <div class="panel-card">
+              <div class="panel-header">
+                <h3>Upcoming fixtures</h3>
+                <button class="btn btn-outline btn-sm" onclick="switchView('events')">View all</button>
+              </div>
+              <div id="dashboardMatchesList">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- Right: Club Activity Feed & Quick Actions -->
+            <div>
+              <div class="panel-card">
+                <div class="panel-header">
+                  <h3>Quick actions</h3>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                  <button class="btn btn-outline" style="justify-content: flex-start; text-align: left;" onclick="switchView('events')">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round"><path d="M3 6h18v15H3z M3 10h18 M7 3v5 M17 3v5"/></svg> Browse tournaments
+                  </button>
+                  <button class="btn btn-outline" style="justify-content: flex-start; text-align: left;" onclick="switchView('players')">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round"><path d="M15 8a4 4 0 1 1-8 0a4 4 0 1 1 8 0 M3 21v-2a8 8 0 0 1 16 0v2 M18 5q5 3 1 7"/></svg> View player roster
+                  </button>
+                  <button class="btn btn-outline" style="justify-content: flex-start; text-align: left;" onclick="switchView('profile')">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" stroke-linecap="round"><path d="M16 7a4 4 0 1 1-8 0a4 4 0 1 1 8 0 M4 21v-2a8 8 0 0 1 16 0v2z"/></svg> Edit sports interests
+                  </button>
+                </div>
+              </div>
+
+              <div class="panel-card">
+                <div class="panel-header">
+                  <h3>Club activity</h3>
+                </div>
+                <div class="activity-feed" id="activityFeedList">
+                  <!-- Populated from state -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= 2. SPORTS CATALOG VIEW ================= -->
+        <section id="view-sports" class="view-section">
+          <div class="panel-header" style="border:none; margin-bottom:12px;">
+            <div>
+              <h2>Sports catalog</h2>
+              <p style="color:var(--text-muted); font-size:0.9rem;">Browse our 6 flagship college sports disciplines, squad sizes, and active tournaments.</p>
+            </div>
+          </div>
+
+          <input class="form-input" id="sportSearch" type="search" placeholder="Search disciplines" aria-label="Search disciplines" oninput="renderSportsCatalog(activeCategory)">
+          <div class="filter-bar">
+            <div class="filter-chip active" onclick="filterSports('all', this)">All Disciplines</div>
+            <div class="filter-chip" onclick="filterSports('Team', this)">Team Sports</div>
+            <div class="filter-chip" onclick="filterSports('Individual', this)">Individual / Dual</div>
+            <div class="filter-chip" onclick="filterSports('Outdoor', this)">Outdoor</div>
+            <div class="filter-chip" onclick="filterSports('Indoor', this)">Indoor</div>
+          </div>
+
+          <div class="sports-grid" id="sportsGridContainer">
+            <!-- Rendered by JS -->
+          </div>
+        </section>
+
+        <!-- ================= 3. EVENTS & TOURNAMENTS VIEW ================= -->
+        <section id="view-events" class="view-section">
+          <div class="panel-header" style="border:none; margin-bottom:12px;">
+            <div>
+              <h2>Tournaments</h2>
+              <p style="color:var(--text-muted); font-size:0.9rem;">Explore upcoming championships, view remaining participant slots, and reserve your place.</p>
+            </div>
+          </div>
+
+          <!-- Filter Bar for Events -->
+          <div class="filter-bar" id="eventSportFilterContainer">
+            <!-- Populated with dynamic chips -->
+          </div>
+
+          <div class="events-grid" id="eventsGridContainer">
+            <!-- Event cards generated by JS -->
+          </div>
+        </section>
+
+        <!-- ================= 4. MY REGISTRATIONS VIEW ================= -->
+        <section id="view-myevents" class="view-section">
+          <div class="panel-header" style="border:none; margin-bottom:16px;">
+            <div>
+              <h2>My registrations</h2>
+              <p style="color:var(--text-muted); font-size:0.9rem;">Review your fixtures or withdraw from a tournament.</p>
+            </div>
+          </div>
+
+          <div id="myEventsContainer">
+            <!-- Injected or empty state -->
+          </div>
+        </section>
+
+        <!-- ================= 5. PLAYER ROSTER VIEW ================= -->
+        <section id="view-players" class="view-section">
+          <div class="panel-header" style="border:none; margin-bottom:12px;">
+            <div>
+              <h2>Player roster</h2>
+              <p style="color:var(--text-muted); font-size:0.9rem;">Find players and coaches by name or sport.</p>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div style="margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+              <input type="text" id="playerTableSearch" placeholder="Filter players by name or sport..." class="form-control" style="max-width:300px;" onkeyup="filterPlayerTable()">
+              <span style="font-size:0.85rem; color:var(--text-muted);" id="rosterCountLabel">Showing all players</span>
+            </div>
+            <div class="table-container">
+              <table class="data-table" id="playerRosterTable">
+                <thead>
+                  <tr>
+                    <th>Player Name</th>
+                    <th>Role</th>
+                    <th>Selected Sports</th>
+                    <th>Registered Events</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="playerRosterTbody">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= 6. USER PROFILE & SETTINGS VIEW ================= -->
+        <section id="view-profile" class="view-section">
+          <div class="panel-header" style="border:none; margin-bottom:16px;">
+            <div>
+              <h2>User Profile & Preferences</h2>
+              <p style="color:var(--text-muted); font-size:0.9rem;">Manage your athlete identity, password, and sports interests saved in LocalStorage.</p>
+            </div>
+          </div>
+
+          <div class="profile-columns" style="display:grid; grid-template-columns: 1fr 1fr; gap:24px;">
+            <!-- Profile Info Form -->
+            <div class="panel-card">
+              <div class="panel-header">
+                <h3>Personal information</h3>
+              </div>
+              <form id="profileForm" onsubmit="handleUpdateProfile(event)">
+                <div class="form-group">
+                  <label for="profName">Full Name</label>
+                  <input type="text" id="profName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label for="profEmail">Email Address</label>
+                  <input type="email" id="profEmail" class="form-control" disabled style="opacity:0.7;">
+                  <small style="color:var(--text-muted); font-size:0.75rem;">Email serves as the unique account key.</small>
+                </div>
+                <div class="form-group">
+                  <label for="profPhone">Phone Number</label>
+                  <input type="tel" id="profPhone" class="form-control" placeholder="+1 (555) 019-2834" required>
+                </div>
+                <div class="form-group">
+                  <label for="profRole">Role</label>
+                  <select id="profRole" class="form-control">
+                    <option value="Player">Player</option>
+                    <option value="Coach">Coach</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Sports Interests (Select all that apply)</label>
+                  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:6px;" id="profileInterestsCheckboxes">
+                    <!-- Populated dynamically -->
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Save Changes</button>
+              </form>
+            </div>
+
+            <!-- Password & Security Card -->
+            <div>
+              <div class="panel-card">
+                <div class="panel-header">
+                  <h3>🔒 Change Password</h3>
+                </div>
+                <form id="changePasswordForm" onsubmit="handleChangePassword(event)">
+                  <div class="form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" class="form-control" minlength="6" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="confirmNewPassword">Confirm New Password</label>
+                    <input type="password" id="confirmNewPassword" class="form-control" minlength="6" required>
+                  </div>
+                  <button type="submit" class="btn btn-outline" style="width:100%;">Update Password</button>
+                </form>
+              </div>
+
+              <!-- LocalStorage Data Reset card for CS testing -->
+              <div class="panel-card" style="border-color: rgba(245, 158, 11, 0.4);">
+                <div class="panel-header">
+                  <h3 style="color:var(--accent-amber);">🛠️ CS Project Testing Tools</h3>
+                </div>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:14px;">
+                  Quickly restore sample mock data or inspect your current LocalStorage items. Ideal for second-year lab demonstrations.
+                </p>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                  <button class="btn btn-sm btn-outline" onclick="resetToDefaultData()">↺ Reset Sample Data</button>
+                  <button class="btn btn-sm btn-outline" onclick="exportDataJSON()">View saved data</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Notification Drawer -->
+  <div class="drawer" id="notificationDrawer">
+    <div class="drawer-header">
+      <h4>Notifications & Alerts</h4>
+      <button class="btn-icon" aria-label="Notifications" onclick="toggleNotifications()">✕</button>
+    </div>
+    <div class="drawer-body" id="notificationsList">
+      <!-- Populated via JS -->
+    </div>
+  </div>
+
+  <!-- ================= AUTH OVERLAY (LOGIN / REGISTER / FORGOT) ================= -->
+  <div class="auth-overlay hidden" id="authOverlay">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <div class="logo-icon">ϟ</div>
+        <h2 style="font-size:1.6rem; color:var(--text-main);">Sport<span style="color:var(--electric-blue)">Sphere</span></h2>
+      </div>
+
+      <!-- Demo Credentials Notice -->
+      <div class="demo-credentials-box">
+        <strong>Demo sign-in</strong><br>
+        Email: <code>alex@sportsphere.edu</code><br>
+        Password: <code>demo1234</code><br>
+        <span style="font-size:0.75rem; color:var(--text-muted);">Click "Autofill Demo" below for immediate 1-click test!</span>
+      </div>
+
+      <div class="auth-toggle-tabs">
+        <div class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Sign In</div>
+        <div class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">Register</div>
+        <div class="auth-tab" id="tabForgot" onclick="switchAuthTab('forgot')">Reset</div>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <form id="loginForm" onsubmit="handleLoginSubmit(event)">
+        <div class="form-group">
+          <label for="loginEmail">College Email</label>
+          <input type="email" id="loginEmail" class="form-control" placeholder="name@sportsphere.edu" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <div class="password-input-wrapper">
+            <input type="password" minlength="6" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+            <button type="button" class="toggle-password" onclick="togglePasswordVisibility('loginPassword', this)">👁️</button>
+          </div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; font-size:0.85rem;">
+          <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+            <input type="checkbox" id="rememberMe"> Remember me
+          </label>
+          <a href="#" style="color:var(--electric-blue); text-decoration:none;" onclick="switchAuthTab('forgot')">Forgot password?</a>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button type="submit" class="btn btn-primary" style="flex:1;">Sign In</button>
+          <button type="button" class="btn btn-outline" onclick="autofillDemo()">Autofill Demo</button>
+        </div>
+      </form>
+
+      <!-- REGISTRATION FORM -->
+      <form id="registerForm" style="display:none;" onsubmit="handleRegisterSubmit(event)">
+        <div class="form-group">
+          <label for="regName">Full Name</label>
+          <input type="text" id="regName" class="form-control" placeholder="e.g. Maya Chen" required>
+        </div>
+        <div class="form-group">
+          <label for="regEmail">College Email</label>
+          <input type="email" id="regEmail" class="form-control" placeholder="e.g. maya@sportsphere.edu" required>
+        </div>
+        <div class="form-group">
+          <label for="regPhone">Phone Number</label>
+          <input type="tel" id="regPhone" class="form-control" placeholder="+1 (555) 019-9922" required>
+        </div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+          <div class="form-group">
+            <label for="regPassword">Password</label>
+            <div class="password-input-wrapper">
+              <input type="password" id="regPassword" class="form-control" minlength="6" placeholder="Min 6 chars" required>
+              <button type="button" class="toggle-password" onclick="togglePasswordVisibility('regPassword', this)">👁️</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="regConfirmPassword">Confirm Password</label>
+            <div class="password-input-wrapper">
+              <input type="password" id="regConfirmPassword" class="form-control" minlength="6" placeholder="Re-enter password" required>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="regRole">Role</label>
+          <select id="regRole" class="form-control">
+            <option value="Player">Player</option>
+            <option value="Coach">Coach</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Select Sports Interests</label>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; font-size:0.85rem;" id="regInterestsContainer">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:8px;">Create Account</button>
+      </form>
+
+      <!-- FORGOT PASSWORD FORM -->
+      <form id="forgotForm" style="display:none;" onsubmit="handleForgotSubmit(event)">
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">
+          Enter your registered email address. We will verify your account in LocalStorage and let you reset your password.
+        </p>
+        <div class="form-group">
+          <label for="forgotEmail">Registered Email</label>
+          <input type="email" id="forgotEmail" class="form-control" placeholder="name@sportsphere.edu" required>
+        </div>
+        <div class="form-group">
+          <label for="forgotNewPassword">Set New Password</label>
+          <input type="password" id="forgotNewPassword" class="form-control" minlength="6" placeholder="New password" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Reset Password</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Registration Confirmation / Details Modal -->
+  <div class="modal-overlay" id="eventModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modalEventTitle">Event Details</h3>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modalEventBody">
+        <!-- Rendered on demand -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Academic Project Guide Modal -->
+  <div class="modal-overlay" id="guideModal">
+    <div class="modal-box" style="max-width: 650px;">
+      <div class="modal-header">
+        <h3>Academic project guide</h3>
+        <button class="modal-close" onclick="closeGuideModal()">✕</button>
+      </div>
+      <div class="modal-body" style="font-size:0.9rem; line-height:1.6; color:var(--text-main);">
+        <p><strong>SportSphere</strong> was engineered specifically for a second-year Computer Science student project presentation.</p>
+        <br>
+        <h4 style="color:var(--electric-blue);">📁 File Structure Blueprint:</h4>
+        <pre style="background:var(--bg-subtle); padding:12px; border-radius:8px; font-family:monospace; margin:8px 0; border:1px solid var(--border-subtle); font-size:0.8rem;">
+sports-management-system/
+├── index.html        (Combined single-page or landing)
+├── login.html        (Simulated user authentication)
+├── register.html     (Player/coach onboarding)
+├── dashboard.html    (Main command center)
+├── css/
+│   └── style.css     (Modern Gen-Z Navy & Electric Blue CSS)
+└── js/
+    ├── data.js       (Sample datasets & default models)
+    ├── auth.js       (LocalStorage authentication logic)
+    └── dashboard.js  (Events, registration, filtering)
+        </pre>
+        <br>
+        <h4 style="color:var(--electric-blue);">🚀 How to Run in VS Code:</h4>
+        <ol style="padding-left:20px;">
+          <li>Install the <strong>Live Server</strong> extension in Visual Studio Code.</li>
+          <li>Right-click <span class="code-pill">index.html</span> and select <strong>"Open with Live Server"</strong>.</li>
+          <li>Use the pre-configured credentials: <span class="code-pill">alex@sportsphere.edu</span> / <span class="code-pill">demo1234</span>.</li>
+        </ol>
+        <br>
+        <div style="background:rgba(0,102,255,0.08); padding:10px 14px; border-radius:8px; border-left:3px solid var(--electric-blue); font-size:0.82rem;">
+          <strong>Examiner Talking Point:</strong> Explain how <code>localStorage.setItem()</code> and <code>localStorage.getItem()</code> are utilized to simulate persistent database state across page refreshes entirely within the client browser.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Alerts Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- APPLICATION LOGIC (DATA + AUTH + DASHBOARD IN VANILLA JS) -->
+  <script src="js/data.js"></script><script src="js/auth.js"></script><script src="js/dashboard.js"></script>
+</body>
+</html>
